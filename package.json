@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-moyurili",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.9.1",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
@@ -9,14 +9,16 @@
     "dist"
   ],
   "license": "MIT",
-  "scripts": {},
   "keywords": [
     "chatbot",
     "koishi",
     "plugin"
   ],
-  "devDependencies": {},
   "peerDependencies": {
     "koishi": "^4.17.11"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/benny502/moyurili"
   }
 }
