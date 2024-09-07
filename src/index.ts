@@ -1,4 +1,3 @@
-import { Session } from 'inspector';
 import { Context, Schema, h } from 'koishi'
 import {} from 'koishi-plugin-cron'
 
@@ -7,7 +6,6 @@ export const name = 'moyurili'
 export const usage = `
   <ul>
     <li><h3>定时任务功能依赖cron插件. 不使用定时功能可以不开启cron插件.</h3></li>
-    <li><h3>频道为可选项，如果不输默认发送所有频道</h3></li>
     <li><h3>频道的格式为 {platformID}:{群号/频道ID}. 例: chronocat: 1234567, telegram: 123456, discord: 123456</h3></li>
     <li><h3>对应的platform与频道ID可以在数据库中查询. 可能需要数据库表channel中有对应的频道才能发送成功.</h3></li>
   </ul>
@@ -77,7 +75,8 @@ export function apply(ctx: Context, config: Config) {
 }
 
 const getData = async (ctx) : Promise<ApiResult> => {
+  const logger = ctx.logger('moyurili')
   const data = await ctx.http.get(api);
-  console.log(data);
+  logger.info(data);
   return await data as ApiResult;
 }
