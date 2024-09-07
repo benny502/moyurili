@@ -42,15 +42,22 @@ type ApiResult = {
 
 export function apply(ctx: Context, config: Config) {
   // write your plugin here
+  const logger = ctx.logger('moyurili')
 
 
   if (config.schedule && ctx.cron && ctx.database) {
     ctx.cron(`${config.minute} ${config.hour} * * *`, async () => {
-      const data = await getData(ctx);
-      if (config.channel.length > 0) {
-        await ctx.broadcast(config.channel, h("img", { src: data.url }));
-      }else {
-        await ctx.broadcast(h("img", { src: data.url }));
+      try {
+        const data = await getData(ctx);
+        if (config.channel.length > 0) {
+          logger.info(config.channel);
+          await ctx.broadcast(config.channel, h("img", { src: data.url }));
+        }else {
+          logger.error('获取到频道配置失败');
+          // await ctx.broadcast(h("img", { src: data.url }));
+        }
+      }catch(error) {
+        logger.error(error);
       }
     });
   }
@@ -61,7 +68,7 @@ export function apply(ctx: Context, config: Config) {
       const data = await getData(ctx);
       session.send(h("img", { src: data.url }));
     }catch(error) {
-      console.log(error);
+      logger.error(error);
       session.send('出了点问题');
     }
 
